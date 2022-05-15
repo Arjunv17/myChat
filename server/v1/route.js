@@ -3,9 +3,7 @@ const Routes= require('./Routes/index');
 const router = express();
 
 router.use('/user',Routes.UserRoutes);
-router.use('/admin',Routes.AdminRoutes);
-router.use('/post',Routes.PostRoutes);
-router.use('/comment',Routes.CommentRoutes);
+
 
 module.exports=router;
 

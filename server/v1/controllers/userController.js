@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-const Model = require('../../models/index');
+const Model = require('../../models');
 const jwt = require('../../middleware')
 const bcrypt = require('bcrypt')
 const email = require('../mailler')
-const { getid } = require('./postController')
 // USER API
 
 // Get API 
