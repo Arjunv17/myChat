@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { Timestamp } = require('mongodb');
 
 
 const userSchema = new mongoose.Schema({
@@ -9,13 +10,33 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String, index: true, default: ''
     },
+    phoneNumber: {
+        type: String, index: true, default: ''
+    },
+    gender: {
+        type: String,
+        enum: ["male", "female", "other"],
+        default: ''
+    },
+    role: {
+        type: String,
+        enum: ["admin", "user"],
+        default: ''
+    },
     password: {
         type: String, index: true, default: ''
+    },
+    profilePic: {
+        type: String,
+        default: ''
     },
     isDeleted: {
         type: Boolean, index: true, default: 'false'
     }
-});
+},
+    {
+        timestamps: true
+    });
 
 
 

@@ -13,7 +13,7 @@ const path = require("path");
 const upload = multer({
     storage: multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, "upload");
+            cb(null, "server/upload");
         },
         filename: function (req, file, cb) {
             var fileName = file.fieldname + "-" + Date.now() + ".png";
@@ -21,7 +21,7 @@ const upload = multer({
             console.log(cb);
         },
     }),
-}).single("image");
+}).single("profilePic");
 
 // JWT tokens create and verify
 

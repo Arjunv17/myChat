@@ -16,7 +16,7 @@ app.use(cors())
 app.use('/api', route);
 const server = require('http').createServer(app);
 // const io = require('socket.io')(server)
-app.use('/static', express.static(path.join(__dirname, '../backend/uploads/')));
+// app.use('/static', express.static(path.join(__dirname, '../backend/uploads/')));
 
 app.get("/", (req, res) => {
     res.send('Hello Its Working')
