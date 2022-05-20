@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { Timestamp } = require('mongodb');
+const MESSAGES = require('../constants')
 
 
 const userSchema = new mongoose.Schema({
@@ -31,6 +32,9 @@ const userSchema = new mongoose.Schema({
         default: ''
     },
     isDeleted: {
+        type: Boolean, index: true, default: 'false'
+    },
+    isVerified: {
         type: Boolean, index: true, default: 'false'
     }
 },

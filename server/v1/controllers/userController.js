@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const Model = require('../../models');
 const jwt = require('../../middleware')
 const bcrypt = require('bcrypt')
-const email = require('../mailler');
+const {sendMailToUser} = require('../mailler');
 const { User } = require('../../models');
+const Constants = require('../../constants')
 // USER API
 
 // Get API 
@@ -20,22 +21,29 @@ async function regitser(req, res) {
             email: req.body.email
         })
         let userNumber = await Model.User.findOne({
-            email: req.body.phoneNumber
+            phoneNumber: req.body.phoneNumber
         })
-        let userRole = await Model.User.findOne({
-            email: req.body.role
-        })
+        let roless = ["admin", "user"]
+        // let userRole = await Model.User.findOne({
+        //     roless: req.body.role
+        // })
         if (userEmail) {
-            res.send('Email is Already Exist')
+            res.send(Constants.messages.MESSAGES.EMAIL_ALREDAY_EXIT)
         }
-        else if(userNumber ){
-            res.send('Number is Already Exist')
+        else if (userNumber) {
+            res.send(Constants.messages.MESSAGES.PHONE_NUMBER_ALREADY_EXISTS)
         }
-        else if(userRole){
+        else if (!roless.includes(req.body.role)) {
             res.send(`Please select any role like ["admin" or "user"]`)
         }
         else {
             let data = await Model.User(req.body);
+            let sendEmailData = await sendMailToUser(
+                data.email,
+                "hello this is verifed email",
+                `<h1>Please click here to verify <a href="#" style="color:red">click here</a></h1>`
+                )
+            console.log(sendEmailData)
             let fileName = req.file.path
             Object.assign(data, { profilePic: fileName })
             console.log(fileName);
@@ -45,6 +53,29 @@ async function regitser(req, res) {
     } catch (error) {
         res.send({
             Result: error
+        })
+    }
+}
+
+
+
+
+async function verifyUser(req,res){
+    try {
+        let data = await Model.User.findOne({email: req.body.email})
+            if (data) {
+                let result = await Model.User.updateOne({_id:data._id},{$set:{isVerified:true}})
+                res.send({
+                    Result:Constants.messages.MESSAGES.EMAIL_VERIFIED
+                })
+            }else{
+                res.send({
+                    Error:Constants.messages.MESSAGES.EMAIL_ID_DOES_NOT_EXISTS
+                })
+            }
+    } catch (error) {
+        res.send({
+            Result:error
         })
     }
 }
@@ -105,6 +136,37 @@ async function regitser(req, res) {
 //     res.end()
 // }
 
+async function userLogin(req, res) {
+    try {
+        let emailData = await Model.User.findOne({ email: req.body.email })
+        if (emailData) {
+            let ppas = bcrypt.compareSync(req.body.password, emailData.password)
+            if (ppas) {
+                let tokens = jwt.tokenGenrate(emailData.id);
+                console.log(tokens)
+                res.send({
+                    Result: "Login Successfully",
+                    Token: tokens
+                })
+            } else {
+                res.send({
+                    Result: "Password not Match"
+                })
+            }
+        } else {
+            res.send({
+                Result: " Email not Match"
+            })
+        }
+
+    } catch (error) {
+        res.send({
+            Result: "User not Match"
+        })
+    }
+}
+
+
 
 
 
@@ -113,6 +175,7 @@ module.exports = {
     getdata,
     //     deleteUser,
     //     updateUser,
-    //     userLogin
+    userLogin,
+    verifyUser
 }
 
