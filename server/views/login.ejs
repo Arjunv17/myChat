@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+  </head>
+  <body>
+
+<h1>Login Here</h1>
+<form action="http://localhost:8000/api/user/login" method="post" id="formId">
+    <input type="email" name="email" id="email"  required>
+    <input type="password" name="password" id="password" required >
+    <input type="submit" value="Login">
+</form>
+<script>
+  document.getElementById('formId').addEventListener('submit',function(){
+    let email = document.getElementById('email').value
+    let password = document.getElementById('password').value
+    sessionStorage.setItem('email',email);
+  })
+</script>
+ <!-- <script>
+   
+   
+   document.getElementById('login').addEventListener("click", function(evt) {
+    let email=document.getElementById('email').value
+   let password = document.getElementById('password').value
+
+   console.log(email)
+       console.log('ev', evt);
+    evt.preventDefault();
+    // Do personal action you want on submit form
+    $.ajax("http://localhost:8000/api/user/login", {
+    type: 'POST',
+    dataType: 'JSON',
+    data:{
+        email:email,
+        password:password
+    },
+    // headers: {
+    // // token: localStorage.getItem('userToken')
+    // },
+success: function(data) {
+    console.log(data,"dfghjk");
+// document.getElementById("userName").innerHTML = data.obj.name
+// if( data.obj.image !=''){
+// var img = document.getElementById("user-profile");
+// img.setAttribute('src',data.obj.image);
+// }
+// showdata(data.post)
+},
+error: function(error) {
+// localStorage.removeItem("userToken")
+// $(location).attr('href', '/index.ejs')
+console.log(error)
+}
+})
+
+
+}, true);
+</script>  -->
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  </body>
+</html>

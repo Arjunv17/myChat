@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt')
 const {sendMailToUser} = require('../mailler');
 const { User } = require('../../models');
 const Constants = require('../../constants')
+const path = require('path')
+let breakPath = path.join(__dirname).split('v1');
 // USER API
 
 // Get API 
@@ -80,6 +82,27 @@ async function verifyUser(req,res){
     }
 }
 
+
+
+
+// USer chat 
+
+async function chatMessage(req,res){
+    let breakPath = path.join(__dirname).split('v1');
+    res.render( `${breakPath[0]}views/index`)
+}
+
+async function LoginPage(req,res){
+    let breakPath = path.join(__dirname).split('v1');
+    res.render( `${breakPath[0]}views/login`)
+}
+
+
+
+
+
+
+
 // // Delete API for user
 // async function deleteUser(req, res) {
 //     let data = await Model.User.findOne({ email: req.body.email })
@@ -136,18 +159,39 @@ async function verifyUser(req,res){
 //     res.end()
 // }
 
+
 async function userLogin(req, res) {
     try {
+        console.log(req.body)
         let emailData = await Model.User.findOne({ email: req.body.email })
+        console.log(emailData);
         if (emailData) {
             let ppas = bcrypt.compareSync(req.body.password, emailData.password)
             if (ppas) {
                 let tokens = jwt.tokenGenrate(emailData.id);
-                console.log(tokens)
-                res.send({
-                    Result: "Login Successfully",
-                    Token: tokens
-                })
+                console.log(tokens);
+                let userAndContacts = await Model.User.aggregate([
+                    {
+                        $match:{_id: mongoose.Types.ObjectId(emailData._id)}
+                    },
+                    {
+                        $lookup:{
+                            from: "contacts",
+                            localField: "_id",
+                            foreignField: "contactId",
+                            as: "contacts",
+                        }
+                    }
+                ])
+                console.log(userAndContacts);
+                res.render( `${breakPath[0]}views/index`,userAndContacts[0])
+
+                // res.render( `${breakPath[0]}views/index`, emailData)
+                // res.send({
+                //     Result: "Login Successfully",
+                //     Token: tokens
+                // })
+                // res.redirect('/api/user/chat')
             } else {
                 res.send({
                     Result: "Password not Match"
@@ -176,6 +220,9 @@ module.exports = {
     //     deleteUser,
     //     updateUser,
     userLogin,
-    verifyUser
+    verifyUser,
+    chatMessage,
+    chatMessage,
+    LoginPage
 }
 

@@ -6,6 +6,35 @@ const jwtkey="secretkey";
 const multer = require("multer");
 const path = require("path");
 
+// const server = require('../index')
+// const { Server } = require("socket.io");
+// const io = new Server(server);
+
+
+// var users={}
+// io.on('connection', (socket) => {
+//     console.log('a user connected', socket.id);
+//     socket.on('userjoin', (name) => {
+//         console.log(name);
+//         users[name] = socket.id;
+//         socket.broadcast.emit('new User', name);
+//     });
+
+//     socket.on('send message', (data) => {
+//         console.log(data.receiver);
+//         socket.to(users[data.receiver]).emit('chat message', data)
+//         // socket.to(users[data.receiver]).emit('chat message', data)
+//     });
+//     socket.on('disconnect', () => {
+//         console.log('user disconnected');
+//     });
+// });
+
+
+
+
+
+
 
 
 // Uploading Image Using Multer

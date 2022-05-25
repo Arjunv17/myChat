@@ -2,7 +2,8 @@ const express = require('express');
 const Routes= require('./Routes/index');
 const router = express();
 
-router.use('/user',Routes.UserRoutes);
+router.use('/user', Routes.UserRoutes);
+router.use('/contact', Routes.ContactRoutes);
 
 
 module.exports=router;

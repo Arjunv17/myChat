@@ -1,3 +1,4 @@
 module.exports={
-    UserRoutes:require('./userRoutes')
+    UserRoutes:require('./userRoutes'),
+    ContactRoutes:require('./contactRoutes')
 };

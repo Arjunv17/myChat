@@ -14,7 +14,7 @@ async function sendMailToUser(email,subject,emailBody) {
       secure: false, // true for 465, false for other ports
       auth: {
         user: "arjunverma870@gmail.com", // generated ethereal user
-        pass:"test", // generated ethereal password
+        pass:"Designerarjun123", // generated ethereal password
       },
     });
 

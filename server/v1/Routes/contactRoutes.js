@@ -8,9 +8,9 @@ const router = express.Router();
 /*
 User API'S
 */
-router.post('/register',upload, Controller.UserController.regitser);
-router.post('/login', Controller.UserController.userLogin);
-router.post('/verify', Controller.UserController.verifyUser);
+router.post('/addContact',upload, Controller.ContactController.addContacts);
+// router.post('/login', Controller.UserController.userLogin);
+// router.post('/verify', Controller.UserController.verifyUser);
 
 
 
@@ -18,8 +18,8 @@ router.post('/verify', Controller.UserController.verifyUser);
 
 // EJS Template 
 
-router.get('/chat', Controller.UserController.chatMessage);
-router.get('/login', Controller.UserController.LoginPage);
+// router.get('/chat', Controller.UserController.chatMessage);
+// router.get('/login', Controller.UserController.LoginPage);
 
 // router.get('/get', Controller.UserController.getdata);
 // router.get('/getdata',verify_token, Controller.UserController.getdata);
