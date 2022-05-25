@@ -40,12 +40,12 @@ async function regitser(req, res) {
         }
         else {
             let data = await Model.User(req.body);
-            let sendEmailData = await sendMailToUser(
-                data.email,
-                "hello this is verifed email",
-                `<h1>Please click here to verify <a href="#" style="color:red">click here</a></h1>`
-                )
-            console.log(sendEmailData)
+            // let sendEmailData = await sendMailToUser(
+            //     data.email,
+            //     "hello this is verifed email",
+            //     `<h1>Please click here to verify <a href="#" style="color:red">click here</a></h1>`
+            //     )
+            // console.log(sendEmailData)
             let fileName = req.file.path
             Object.assign(data, { profilePic: fileName })
             console.log(fileName);

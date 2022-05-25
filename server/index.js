@@ -38,7 +38,8 @@ app.get("/", (req, res) => {
 // Sockets backend
 var users = {};
 io.on("connection", (socket) => {
-    console.log("a user connected", socket.id);
+    console.log("User connected");
+    
     socket.on("userjoin", (data) => {
         users[data.uId] = socket.id;
         socket.broadcast.emit("new User", data.uName);
